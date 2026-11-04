@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import './OrderSuccess.css';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "./OrderSuccess.css";
 
 function OrderSuccess() {
   const location = useLocation();
@@ -8,11 +8,11 @@ function OrderSuccess() {
   const [showConfetti, setShowConfetti] = useState(true);
 
   const order = location.state?.order;
-
+  console.log(order);
   // Redirect to home if no order is passed
   useEffect(() => {
     if (!order) {
-      navigate('/');
+      navigate("/");
     }
   }, [order, navigate]);
 
@@ -32,11 +32,11 @@ function OrderSuccess() {
     product,
     quantity,
     orderNumber,
-    shipping
+    shipping,
   } = order;
 
   const handleContinueShopping = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -55,7 +55,7 @@ function OrderSuccess() {
               style={{
                 left: `${Math.random() * 100}%`,
                 animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random()}s`
+                animationDuration: `${2 + Math.random()}s`,
               }}
             />
           ))}
@@ -76,41 +76,43 @@ function OrderSuccess() {
             <div className="info-item">
               <div className="info-icon">📄</div>
               <div className="info-label">Order Number</div>
-              <div className="info-value">{orderNumber || _id.slice(-6).toUpperCase()}</div>
+              <div className="info-value">
+                {orderNumber || _id.slice(-6).toUpperCase()}
+              </div>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">📅</div>
               <div className="info-label">Order Date</div>
               <div className="info-value">
-                {new Date(createdAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
+                {new Date(createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
                 })}
               </div>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">💰</div>
               <div className="info-label">Total Amount</div>
               <div className="info-value">AED {totalPrice?.toFixed(2)}</div>
             </div>
-            
+
             <div className="info-item">
               <div className="info-icon">💳</div>
               <div className="info-label">Payment Method</div>
               <div className="info-value">
-                {paymentMethod === 'cod' ? 'Cash on Delivery' : paymentMethod?.toUpperCase()}
+                {paymentMethod === "cod"
+                  ? "Cash on Delivery"
+                  : paymentMethod?.toUpperCase()}
               </div>
             </div>
           </div>
 
           {/* Order Summary */}
           <div className="order-summary-section">
-            <h2 className="section-title">
-              🛒 Order Summary
-            </h2>
+            <h2 className="section-title">🛒 Order Summary</h2>
 
             <div className="order-table-container">
               <table className="enhanced-table">
@@ -124,11 +126,13 @@ function OrderSuccess() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="product-name">{product?.name || 'Sweet Drops Product'}</td>
+                    <td className="product-name">
+                      {product?.name || "Sweet Drops Product"}
+                    </td>
                     <td>{quantity || 1}</td>
-                    <td>AED {product?.price?.toFixed(2) || '0.00'}</td>
+                    <td>AED {product?.price?.toFixed(2) || "0.00"}</td>
                     <td className="total-price">
-                      AED {(quantity * (product?.price || 0)).toFixed(2)}
+                      AED {totalPrice?.toFixed(2)}
                     </td>
                   </tr>
                 </tbody>
@@ -141,7 +145,8 @@ function OrderSuccess() {
             <div className="shipping-section">
               <h3 className="shipping-title">🚚 Shipping Details</h3>
               <p className="shipping-details">
-                <strong>Address:</strong> {shipping.address}<br />
+                <strong>Address:</strong> {shipping.address}
+                <br />
                 <strong>City:</strong> {shipping.city}
               </p>
             </div>
@@ -150,14 +155,19 @@ function OrderSuccess() {
           {/* Footer Note */}
           <div className="footer-note">
             <p>
-              📧 We'll send you a confirmation email with delivery details shortly.<br />
+              📧 We'll send you a confirmation email with delivery details
+              shortly.
+              <br />
               🚛 Your order will be delivered within 1-3 business days.
             </p>
           </div>
 
           {/* Action Button */}
           <div className="action-section">
-            <button className="continue-shopping-btn" onClick={handleContinueShopping}>
+            <button
+              className="continue-shopping-btn"
+              onClick={handleContinueShopping}
+            >
               Continue Shopping
             </button>
           </div>

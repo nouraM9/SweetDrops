@@ -40,7 +40,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   align-items: center;
 }
@@ -236,17 +236,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
 .hero-image img {
-  width: 100%;
-  max-width: 500px;
+  width: auto;
   height: auto;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
+  max-width: 100%;
+  object-fit: unset;
 }
-
 .hero-image:hover img {
   transform: scale(1.05) rotate(2deg);
 }

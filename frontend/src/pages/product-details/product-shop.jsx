@@ -3,8 +3,10 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import "./product.css"; // Your enhanced CSS file
-const API_URL = "http://localhost:8000/api/v1";
-// const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
+const API_URL = "http://127.0.0.1:8000/api/v1";
+
+const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
+
 function Product({ addToCart, setCart }) {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ function Product({ addToCart, setCart }) {
   const getImageUrl = (imageCover) => {
     if (!imageCover)
       return "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80";
-    return `${process.env.REACT_APP_API_URL}/img/products/${imageCover}`;
+    return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
 
   const handleBuyNow = () => {
@@ -162,7 +164,7 @@ function Product({ addToCart, setCart }) {
               </div>
             )}
             <img
-              src={"/images.jpeg"}
+              src={getImageUrl(product?.imageCover)}
               alt={product.name}
               onLoad={() => setImageLoading(false)}
               onError={(e) => {

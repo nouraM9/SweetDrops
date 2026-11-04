@@ -3,7 +3,7 @@ import axios from "axios";
 import "./Checkout.css";
 import { useNavigate } from "react-router-dom";
 const uaeCitiesFallback = [
-  { city: "Dubai", fee: 20 },
+  { city: "Dubai", fee: 40 },
   { city: "Abu Dhabi", fee: 25 },
   { city: "Sharjah", fee: 20 },
   { city: "Ajman", fee: 20 },
@@ -11,6 +11,11 @@ const uaeCitiesFallback = [
   { city: "Fujairah", fee: 35 },
   { city: "Umm Al Quwain", fee: 25 },
 ];
+
+const API_URL = "http://127.0.0.1:8000/api/v1";
+
+const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
+
 function Checkout({ cart, setCart }) {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -81,7 +86,7 @@ function Checkout({ cart, setCart }) {
     if (!imageCover || imageCover === "undefined" || imageCover.trim() === "") {
       return "/images.jpeg"; // fallback
     }
-    return `${process.env.REACT_APP_API_URL}/img/products/${imageCover}`;
+    return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
 
   const subtotal = cart.reduce(
@@ -294,7 +299,7 @@ function Checkout({ cart, setCart }) {
               cart.map((item, idx) => (
                 <div key={idx} className="order-item">
                   <img
-                    src={productImageUrl}
+                    src={getImageUrl(product?.imageCover)}
                     alt={product ? product.name : item.name}
                     onError={(e) => {
                       e.target.src = "/images.jpeg";

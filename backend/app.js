@@ -16,14 +16,12 @@ const app = express();
 // Set security HTTP headers
 app.use(helmet());
 
-//Enable CORS so frontend (like React) can access this API from another origin
-// app.use(cors({
-//   origin: 'http://localhost:3000', // or your frontend URL
-//   credentials: true
-// }));
-app.use(cors({ origin: "https://sweetdrop.nouradev.com" }));
-
-// Add this middleware before your static file serving
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://sweetdrop.nouradev.com"],
+  }),
+);
+// Add this middleware before your stSatic file serving
 app.use("/img", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Methods", "GET");

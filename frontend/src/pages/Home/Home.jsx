@@ -19,7 +19,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 // Env vars
+// const API_URL = "https://sweetdrop-backend.onrender.com/api/v1";
 const API_URL = "http://127.0.0.1:8000/api/v1";
+
 const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
 
 // Helper: log differently in dev vs prod
@@ -51,6 +53,7 @@ function Home() {
 
         if (res.data?.data?.length > 0) {
           setProduct(res.data.data[0]);
+          console.log(res.data.data[0].imageCover);
         }
       } catch (error) {
         logError("Failed to fetch product for home:", error);
@@ -73,12 +76,16 @@ function Home() {
     fetchProduct();
   }, []);
 
+  // const getImageUrl = (imageCover) => {
+  //   if (!imageCover)
+  //     return "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80";
+  //   return `${API_URL.replace("/api/v1", "")}public/img/products/${imageCover}`;
+  // };
   const getImageUrl = (imageCover) => {
-    if (!imageCover)
-      return "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80";
+    if (!imageCover) return "";
+
     return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -233,7 +240,7 @@ function Home() {
                 ) : (
                   <div style={{ position: "relative" }}>
                     <img
-                      src={"/images.jpeg"}
+                      src={getImageUrl(product?.imageCover)}
                       alt={product?.name || "Sweet Drops"}
                       crossOrigin="anonymous"
                     />
@@ -245,7 +252,6 @@ function Home() {
           </div>
         </div>
       </section>
-
       {/* Features Section */}
       <section className="features-section">
         <div className="container">
@@ -269,14 +275,13 @@ function Home() {
           </div>
         </div>
       </section>
-
       {/* About Section */}
       <section id="about" className="about-section">
         <div className="container">
           <div className="grid grid-cols-2">
             <div className="about-image">
               <img
-                src={aboutUsImageUrl}
+                // src={aboutUsImageUrl}
                 alt="About SweetDrops"
                 crossOrigin="anonymous"
               />
@@ -309,7 +314,6 @@ function Home() {
           </div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section id="contact" className="contact-section">
         <div className="container">
