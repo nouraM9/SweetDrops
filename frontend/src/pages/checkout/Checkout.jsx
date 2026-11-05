@@ -12,10 +12,21 @@ const uaeCitiesFallback = [
   { city: "Umm Al Quwain", fee: 25 },
 ];
 
-const API_URL = "http://127.0.0.1:8000/api/v1";
+// const API_URL = "http://127.0.0.1:8000/api/v1";
+
+const REACT_APP_API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://sweetdrop-backend.onrender.com/api/v1";
 
 const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
-
+// Helper: log differently in dev vs prod
+function logError(message, error) {
+  if (LOG_LEVEL === "debug") {
+    console.error(message, error);
+  } else {
+    console.error(message);
+  }
+}
 function Checkout({ cart, setCart }) {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -42,7 +53,7 @@ function Checkout({ cart, setCart }) {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}deliveryFee`);
+        const res = await fetch(`${REACT_APP_API_URL}/deliveryFee`);
         const data = await res.json();
         const fetchedCities = data.data || [];
         setCities(fetchedCities.length > 0 ? fetchedCities : uaeCitiesFallback);
@@ -60,7 +71,7 @@ function Checkout({ cart, setCart }) {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}products`);
+        const res = await axios.get(`${REACT_APP_API_URL}/products`);
         if (res.data.data && res.data.data.length > 0) {
           setProduct(res.data.data[0]);
         }
@@ -86,7 +97,7 @@ function Checkout({ cart, setCart }) {
     if (!imageCover || imageCover === "undefined" || imageCover.trim() === "") {
       return "/images.jpeg"; // fallback
     }
-    return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
+    return `${REACT_APP_API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
 
   const subtotal = cart.reduce(
