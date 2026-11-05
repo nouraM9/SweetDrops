@@ -19,13 +19,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 // Env vars
-// const API_URL = "https://sweetdrop-backend.onrender.com/api/v1";
-// const API_URL = "http://127.0.0.1:8000/api/v1";
+
 const REACT_APP_API_URL =
   process.env.REACT_APP_API_URL ||
   "https://sweetdrop-backend.onrender.com/api/v1";
-const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
 
+const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
 // Helper: log differently in dev vs prod
 function logError(message, error) {
   if (LOG_LEVEL === "debug") {
@@ -281,7 +280,7 @@ function Home() {
           <div className="grid grid-cols-2">
             <div className="about-image">
               <img
-                // src={aboutUsImageUrl}
+                src={aboutUsImageUrl}
                 alt="About SweetDrops"
                 crossOrigin="anonymous"
               />
@@ -370,7 +369,7 @@ function Home() {
                 </div>
                 <button
                   type="submit"
-                  className="btn-primary"
+                  className="btn-primary "
                   style={{ width: "100%" }}
                   disabled={isSubmitting}
                 >
