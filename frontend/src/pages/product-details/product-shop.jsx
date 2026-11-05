@@ -3,10 +3,20 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import "./product.css"; // Your enhanced CSS file
-const API_URL = "http://127.0.0.1:8000/api/v1";
+// const API_URL = "http://127.0.0.1:8000/api/v1";
+const REACT_APP_API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://sweetdrop-backend.onrender.com/api/v1";
 
 const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
-
+// Helper: log differently in dev vs prod
+function logError(message, error) {
+  if (LOG_LEVEL === "debug") {
+    console.error(message, error);
+  } else {
+    console.error(message);
+  }
+}
 function Product({ addToCart, setCart }) {
   const { productId } = useParams();
   const navigate = useNavigate();
@@ -31,7 +41,9 @@ function Product({ addToCart, setCart }) {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_URL}/products/${productId}`);
+        const res = await axios.get(
+          `${REACT_APP_API_URL}/products/${productId}`,
+        );
         console.log(res);
 
         const productData = res.data.data;
@@ -62,7 +74,7 @@ function Product({ addToCart, setCart }) {
   const getImageUrl = (imageCover) => {
     if (!imageCover)
       return "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80";
-    return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
+    return `${REACT_APP_API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
 
   const handleBuyNow = () => {
