@@ -20,8 +20,10 @@ import { Link } from "react-router-dom";
 
 // Env vars
 // const API_URL = "https://sweetdrop-backend.onrender.com/api/v1";
-const API_URL = "http://127.0.0.1:8000/api/v1";
-
+// const API_URL = "http://127.0.0.1:8000/api/v1";
+const REACT_APP_API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://sweetdrop-backend.onrender.com/api/v1";
 const LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL || "error";
 
 // Helper: log differently in dev vs prod
@@ -49,7 +51,7 @@ function Home() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`${API_URL}/products`);
+        const res = await axios.get(`${REACT_APP_API_URL}/products`);
 
         if (res.data?.data?.length > 0) {
           setProduct(res.data.data[0]);
@@ -76,15 +78,10 @@ function Home() {
     fetchProduct();
   }, []);
 
-  // const getImageUrl = (imageCover) => {
-  //   if (!imageCover)
-  //     return "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?auto=format&fit=crop&w=800&q=80";
-  //   return `${API_URL.replace("/api/v1", "")}public/img/products/${imageCover}`;
-  // };
   const getImageUrl = (imageCover) => {
     if (!imageCover) return "";
 
-    return `${API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
+    return `${REACT_APP_API_URL.replace("/api/v1", "")}/img/products/${imageCover}`;
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,7 +94,10 @@ function Home() {
     setSubmitStatus({ type: "", message: "" });
 
     try {
-      const response = await axios.post(`${API_URL}/contact`, formData);
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/contact`,
+        formData,
+      );
 
       if (response.data.status === "success") {
         setSubmitStatus({
