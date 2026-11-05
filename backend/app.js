@@ -18,7 +18,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://sweetdrop.nouradev.com"],
+    origin: ["http://localhost:3000", "https://sweetdrops.nouradev.com'"],
   }),
 );
 // Add this middleware before your stSatic file serving
