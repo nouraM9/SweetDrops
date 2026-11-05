@@ -50,7 +50,9 @@ function Home() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`${REACT_APP_API_URL}/products`);
+        const res = await axios.get(
+          `https://sweetdrop-backend.onrender.com/api/v1/products`,
+        );
 
         if (res.data?.data?.length > 0) {
           setProduct(res.data.data[0]);
