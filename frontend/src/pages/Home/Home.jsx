@@ -50,9 +50,7 @@ function Home() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
-          `https://sweetdrop-backend.onrender.com/api/v1/products`,
-        );
+        const res = await axios.get(`${REACT_APP_API_URL}/products`);
 
         if (res.data?.data?.length > 0) {
           setProduct(res.data.data[0]);
@@ -192,9 +190,8 @@ function Home() {
                   {product ? product.name : "SweetDrops Natural Sweetener"}
                 </h1>
                 <p>
-                  {product
-                    ? product.description
-                    : "Experience the perfect balance of sweetness and health with our premium sugar-free drops made from pure stevia extract."}
+                  Experience the perfect balance of sweetness and health with
+                  our premium sugar-free drops made from pure stevia extract.
                 </p>
                 <div className="hero-price">
                   {product?.price ? `${product.price} AED` : "49 AED"}
